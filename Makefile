@@ -24,6 +24,7 @@ clean:
 
 linux: main.go
 	GOOS=linux GOARCH=amd64 go build -o ./build/linux/${BINARY} main.go
+	
 get-deps:
 	go get github.com/fatih/color
 	go get github.com/mattn/go-colorable
