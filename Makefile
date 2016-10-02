@@ -5,7 +5,7 @@ GOPACKAGES = $(shell go list ./... | grep ksang)
 
 .PHONY: build install test linux get-deps
 
-GOPATH := ${PWD}/vendor:${GOPATH}
+GOPATH := ${GOPATH}:${PWD}/vendor
 export GOPATH
 
 default: build
@@ -24,7 +24,7 @@ clean:
 
 linux: main.go
 	GOOS=linux GOARCH=amd64 go build -o ./build/linux/${BINARY} main.go
-	
+
 get-deps:
 	go get github.com/fatih/color
 	go get github.com/mattn/go-colorable

@@ -3,7 +3,7 @@ go:
  - 1.6
  - tip
 
-install: export GOPATH=$(pwd)/vendor:$GOPATH;make get-deps
+install: make get-deps
 
 script:
   - make
