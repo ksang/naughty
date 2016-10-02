@@ -64,7 +64,7 @@ func curlRequest(req *http.Request, withBody bool) {
 	fmt.Printf("> %s %s %s\n", req.Method, req.URL.String(), req.Proto)
 	// incoming req host is promoted to req.Host
 	fmt.Printf("> Host: %s\n", req.Host)
-	for k, _ := range req.Header {
+	for k := range req.Header {
 		fmt.Printf("> %s: %s\n", k, req.Header.Get(k))
 	}
 	if withBody {
@@ -84,7 +84,7 @@ func CurlResponse(res *http.Response) {
 
 func curlResponse(res *http.Response, withBody bool) {
 	fmt.Printf("< %s %s\n", res.Proto, res.Status)
-	for k, _ := range res.Header {
+	for k := range res.Header {
 		fmt.Printf("< %s: %s\n", k, res.Header.Get(k))
 	}
 	if withBody {
@@ -108,7 +108,7 @@ func colorRequest(req *http.Request, withBody bool) {
 	fmt.Printf("%s %s %s\n", magenta(req.Method), magenta(req.URL.String()), magenta(req.Proto))
 	// incoming req host is promoted to req.Host
 	fmt.Printf("%s %s\n", bold("Host:"), magenta(req.Host))
-	for k, _ := range req.Header {
+	for k := range req.Header {
 		fmt.Printf("%s%s %s\n", bold(k), bold(":"), magenta(req.Header.Get(k)))
 		if k == "Authorization" {
 			u, p, ok := req.BasicAuth()
@@ -136,7 +136,7 @@ func colorResponse(res *http.Response, withBody bool) {
 	green := color.New(color.FgHiGreen, color.Bold).SprintFunc()
 	bold := color.New(color.Bold).SprintFunc()
 	fmt.Printf("%s %s\n", green(res.Status), green(res.Proto))
-	for k, _ := range res.Header {
+	for k := range res.Header {
 		fmt.Printf("%s%s %s\n", bold(k), bold(":"), green(res.Header.Get(k)))
 	}
 	if withBody {
