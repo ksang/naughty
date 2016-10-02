@@ -3,6 +3,11 @@ go:
  - 1.6
  - tip
 
+install:
+  - go get github.com/fatih/color
+  - go get github.com/mattn/go-colorable
+  - go get github.com/mattn/go-isatty
+
 script:
   - make
   - make test
