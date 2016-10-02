@@ -3,7 +3,8 @@ go:
  - 1.6
  - tip
 
+install: make get-deps
+
 script:
-  - make get-deps
   - make
   - make test
