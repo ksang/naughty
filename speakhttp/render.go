@@ -12,6 +12,38 @@ import (
 	"github.com/fatih/color"
 )
 
+// refer to https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
+var (
+	RequestWellKnownHeaders = []string{
+		"Host",
+		"Date",
+		"User-Agent",
+		"Accept",
+		"Connection",
+		"Authorization",
+		"Accept-Charset",
+		"Accept-Encoding",
+		"Accept-Language",
+		"Cookie",
+		"Content-Length",
+		"Referer",
+		"Upgrade",
+	}
+	ResponseWellKnownHeaders = []string{
+		"Server",
+		"Date",
+		"Connection",
+		"Content-Type",
+		"Content-Length",
+		"Transfer-Encoding",
+		"Status",
+		"Cache-Control",
+		"Set-Cookie",
+		"Trailer",
+		"Vary",
+	}
+)
+
 // Render defines the type of printing http request and response packets
 type Render interface {
 	// SpeakRequest is the method to printing http request
@@ -64,7 +96,8 @@ func curlRequest(req *http.Request, withBody bool) {
 	fmt.Printf("> %s %s %s\n", req.Method, req.URL.String(), req.Proto)
 	// incoming req host is promoted to req.Host
 	fmt.Printf("> Host: %s\n", req.Host)
-	for k := range req.Header {
+	order := getHeaderOrder(req.Header, RequestWellKnownHeaders)
+	for _, k := range order {
 		fmt.Printf("> %s: %s\n", k, req.Header.Get(k))
 	}
 	if withBody {
@@ -84,7 +117,8 @@ func CurlResponse(res *http.Response) {
 
 func curlResponse(res *http.Response, withBody bool) {
 	fmt.Printf("< %s %s\n", res.Proto, res.Status)
-	for k := range res.Header {
+	order := getHeaderOrder(res.Header, ResponseWellKnownHeaders)
+	for _, k := range order {
 		fmt.Printf("< %s: %s\n", k, res.Header.Get(k))
 	}
 	if withBody {
@@ -108,7 +142,8 @@ func colorRequest(req *http.Request, withBody bool) {
 	fmt.Printf("%s %s %s\n", magenta(req.Method), magenta(req.URL.String()), magenta(req.Proto))
 	// incoming req host is promoted to req.Host
 	fmt.Printf("%s %s\n", bold("Host:"), magenta(req.Host))
-	for k := range req.Header {
+	order := getHeaderOrder(req.Header, RequestWellKnownHeaders)
+	for _, k := range order {
 		fmt.Printf("%s%s %s\n", bold(k), bold(":"), magenta(req.Header.Get(k)))
 		if k == "Authorization" {
 			u, p, ok := req.BasicAuth()
@@ -136,7 +171,8 @@ func colorResponse(res *http.Response, withBody bool) {
 	green := color.New(color.FgHiGreen, color.Bold).SprintFunc()
 	bold := color.New(color.Bold).SprintFunc()
 	fmt.Printf("%s %s\n", green(res.Status), green(res.Proto))
-	for k := range res.Header {
+	order := getHeaderOrder(res.Header, ResponseWellKnownHeaders)
+	for _, k := range order {
 		fmt.Printf("%s%s %s\n", bold(k), bold(":"), green(res.Header.Get(k)))
 	}
 	if withBody {
@@ -168,4 +204,31 @@ func printResponseBody(res *http.Response) {
 	// restore request body content
 	res.Body = ioutil.NopCloser(bytes.NewBuffer(b))
 	fmt.Println(string(b))
+}
+
+func getHeaderOrder(src http.Header, order []string) []string {
+	if len(src) == 0 {
+		return []string{}
+	}
+	// firstly we copy the http header to keep it unchanged
+	head := make(map[string]string)
+	for k := range src {
+		head[k] = src.Get(k)
+	}
+
+	ret := make([]string, 0)
+	// go through order array to get known headers in order
+	for _, h := range order {
+		if _, ok := head[h]; ok {
+			ret = append(ret, h)
+			delete(head, h)
+		}
+	}
+
+	// append items left in the header
+	for k, _ := range head {
+		ret = append(ret, k)
+	}
+
+	return ret
 }
