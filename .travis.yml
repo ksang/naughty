@@ -6,5 +6,6 @@ go:
 install: go get -t ./...
 
 script:
+  - ls -l $GOPATH/src/github.com
   - make
   - make test
