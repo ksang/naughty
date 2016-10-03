@@ -3,7 +3,7 @@ go:
  - 1.6
  - tip
 
-install: make clone-deps
+install: 
 
 script:
   - make

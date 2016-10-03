@@ -30,12 +30,3 @@ get-deps:
 	go get github.com/fatih/color
 	go get github.com/mattn/go-colorable
 	go get github.com/mattn/go-isatty
-
-clone-deps:
-	mkdir -p ${ROOTDIR}/vendor/src/github.com/fatih
-	cd ${ROOTDIR}/vendor/src/github.com/fatih
-	git clone https://github.com/fatih/color.git
-	mkdir -p ${ROOTDIR}/vendor/src/github.com/mattn
-	cd ${ROOTDIR}/vendor/src/github.com/mattn
-	git clone https://github.com/mattn/go-colorable.git
-	git clone https://github.com/mattn/go-isatty.git
