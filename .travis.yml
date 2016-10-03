@@ -3,7 +3,7 @@ go:
  - 1.6
  - tip
 
-install: export GOPATH=$(pwd)/vendor:$GOPATH; go get -t -d ./...
+install:
 
 script:
   - make
