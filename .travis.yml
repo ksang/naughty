@@ -3,9 +3,8 @@ go:
  - 1.6
  - tip
 
-install: go get -t ./...
+install: export GOPATH=$(pwd)/vendor:$GOPATH; go get -t ./...
 
 script:
-  - ls -l $GOPATH/src/github.com
   - make
   - make test
