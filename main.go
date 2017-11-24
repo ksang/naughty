@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	_ "net/http/pprof"
 	"net/url"
 
 	np "github.com/ksang/naughty/proxy"
@@ -29,6 +30,9 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
+	go func() {
+		log.Println(http.ListenAndServe("127.0.0.1:6060", nil))
+	}()
 	log.Fatal(startProxy())
 }
 
@@ -38,6 +42,7 @@ func startProxy() error {
 		return err
 	}
 	rp := httputil.NewSingleHostReverseProxy(tarUrl)
+
 	var speaker speakhttp.Render
 	if withbody {
 		speaker = speakhttp.NewRender(

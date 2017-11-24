@@ -32,6 +32,7 @@ var (
 	ResponseWellKnownHeaders = []string{
 		"Server",
 		"Date",
+		"Last-Modified",
 		"Connection",
 		"Content-Type",
 		"Content-Length",

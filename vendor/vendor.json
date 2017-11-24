@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "",
+	"package": [
+		{
+			"checksumSHA1": "YtcDWSOBq801CwMYM+XjwuFGULM=",
+			"path": "github.com/fatih/color",
+			"revision": "5df930a27be2502f99b292b7cc09ebad4d0891f4",
+			"revisionTime": "2017-09-26T11:14:11Z"
+		},
+		{
+			"checksumSHA1": "89I9MhxW2SaTiVDFGOyTbok5p+g=",
+			"path": "github.com/mattn/go-colorable",
+			"revision": "6fcc0c1fd9b620311d821b106a400b35dc95c497",
+			"revisionTime": "2017-11-11T06:59:53Z"
+		},
+		{
+			"checksumSHA1": "qmf2OPIdr1nS6FGwGndELHFXHFU=",
+			"path": "github.com/mattn/go-isatty",
+			"revision": "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c",
+			"revisionTime": "2017-11-07T05:05:31Z"
+		}
+	],
+	"rootPath": "github.com/ksang/naughty"
+}
