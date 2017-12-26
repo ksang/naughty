@@ -6,11 +6,11 @@ Naughty is a tool acting as a man-in-the-middle reverse proxy server pretty prin
 
 ![screenshot](./screenshot.png)
 
-###Build:
+### Build:
 
 	make build
 
-###Usage:
+### Usage:
 
 	  -a string
 	    	local addr to bind (default "127.0.0.1:8080")
